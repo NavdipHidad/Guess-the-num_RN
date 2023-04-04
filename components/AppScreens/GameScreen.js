@@ -1,6 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {StyleSheet, View, Text, Button, Alert, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, Button, Alert, ScrollView, Dimensions} from 'react-native';
 import Icons from 'react-native-vector-icons/Ionicons';
+Icons.loadFont();
 
 import NumberContainer from '../NumberContainer';
 import MainButton from '../MainButton';
@@ -71,14 +72,14 @@ const GameScreen = props => {
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <MainButton onPress={nextGuessHandler.bind(this, 'lower')}>
-          <Icons name="md-remove" size={30} color="white" />
+          <Icons name="remove" size={30} color="white" />
         </MainButton>
         <MainButton onPress={nextGuessHandler.bind(this, 'greater')}>
-          <Icons name="md-add" size={30} color="white" />
+          <Icons name="add" size={30} color="white" />
         </MainButton>
       </Card>
-      <View style={styles.list}>
-        <ScrollView>
+      <View style={styles.listContainer}>
+        <ScrollView contentContainerStyle={styles.list}>
           {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
         </ScrollView>
       </View>
@@ -99,9 +100,14 @@ const styles = StyleSheet.create({
     width: 300,
     maxWidth: '80%',
   },
-  list:{
+  listContainer:{
     flex: 1,
     width: '70%',
+  },
+  list:{
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end'
   },
   listItem: {
     borderColor: '#ccc',
@@ -110,7 +116,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     backgroundColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    width: '80%',
   },
 });
 

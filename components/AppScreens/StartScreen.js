@@ -7,10 +7,11 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard, //its API not component
-  Alert, //its obj not component
+  Alert,
+  ScrollView,
+  KeyboardAvoidingView, //its obj not component
 } from 'react-native';
 import Icons from 'react-native-vector-icons';
-
 
 import Card from '../Card';
 import colors from '../../constants/colors';
@@ -71,38 +72,43 @@ const StartScreen = props => {
   }
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}>
-      <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Game!</Text>
-        <Card style={styles.inputContainer}>
-          <Text>Select a Number</Text>
-          <Input
-            style={styles.input}
-            blurOnSubmit
-            autoCapitalize="none"
-            keybordType="number-pad"
-            autoCorrect={false}
-            maxLength={2}
-            onChangeText={numberInputHandler}
-            value={enteredValue}
-          />
-          <View style={styles.buttonContainer}>
-            <Button
-              title='Reset'
-              onPress={resetInputHandler}
-              color={colors.accent}></Button>
-            <Button
-              title="Confirm"
-              onPress={confirmInputHandler}
-              color={colors.primary}></Button>
+    <ScrollView>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
+        {/*To close the keybord when click on screen other than keybord*/}
+        <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={20}>
+          <View style={styles.screen}>
+            <Text style={styles.title}>Start a New Game!</Text>
+            <Card style={styles.inputContainer}>
+              <Text>Select a Number</Text>
+              <Input
+                style={styles.input}
+                blurOnSubmit
+                autoCapitalize="none"
+                keybordType="number-pad"
+                autoCorrect={false}
+                maxLength={2}
+                onChangeText={numberInputHandler}
+                value={enteredValue}
+              />
+              <View style={styles.buttonContainer}>
+                <Button
+                  title="Reset"
+                  onPress={resetInputHandler}
+                  color={colors.accent}></Button>
+                <Button
+                  title="Confirm"
+                  onPress={confirmInputHandler}
+                  color={colors.primary}></Button>
+              </View>
+            </Card>
+            {confirmedOutput}
           </View>
-        </Card>
-        {confirmedOutput}
-      </View>
-    </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </ScrollView>
   );
 };
 
